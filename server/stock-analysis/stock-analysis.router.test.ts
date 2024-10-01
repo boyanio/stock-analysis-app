@@ -68,7 +68,7 @@ describe("Stock Analysis API", () => {
         .send();
       expect(res.statusCode).toEqual(409);
       expect(res.body).toEqual({
-        error: "cannot determine optimal buy & sell points",
+        error: "Cannot determine optimal buy & sell points.",
       });
     }
   );
@@ -80,7 +80,7 @@ describe("Stock Analysis API", () => {
       .send();
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      error: "invalid start time",
+      error: "Invalid start time.",
     });
   });
 
@@ -91,7 +91,7 @@ describe("Stock Analysis API", () => {
       .send();
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      error: "invalid end time",
+      error: "Invalid end time.",
     });
   });
 
@@ -102,7 +102,7 @@ describe("Stock Analysis API", () => {
       .send();
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      error: "no records matching the given time range",
+      error: "No records matching the given time range.",
     });
   });
 });

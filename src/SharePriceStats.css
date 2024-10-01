@@ -1,0 +1,9 @@
+.SharePriceStats-layout {
+  text-align: left;
+  font-size: 1.5rem;
+  padding: 10px;
+}
+
+.SharePriceStats-layout > div {
+  margin: 4px 0;
+}

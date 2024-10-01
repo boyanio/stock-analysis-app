@@ -20,26 +20,28 @@ export function stockAnalysisRouter(
     if (startTime === false) {
       return res
         .status(STATUS_BAD_REQUEST)
-        .send({ error: "invalid start time" });
+        .send({ error: "Invalid start time." });
     }
 
     const endTime = parseTimestamp(endTimeParam);
     if (endTime === false) {
-      return res.status(STATUS_BAD_REQUEST).send({ error: "invalid end time" });
+      return res
+        .status(STATUS_BAD_REQUEST)
+        .send({ error: "Invalid end time." });
     }
 
     const records = reposiroy.getRecords({ startTime, endTime });
     if (!records.length) {
       return res
         .status(STATUS_BAD_REQUEST)
-        .send({ error: "no records matching the given time range" });
+        .send({ error: "No records matching the given time range." });
     }
 
     const [buyIndex, sellIndex] = findBestBuySellIndexes(records);
     if (buyIndex < 0 || sellIndex < 0) {
       return res
         .status(STATUS_CONFLICT)
-        .send({ error: "cannot determine optimal buy & sell points" });
+        .send({ error: "Cannot determine optimal buy & sell points." });
     }
 
     const stats: SharePriceStats = {

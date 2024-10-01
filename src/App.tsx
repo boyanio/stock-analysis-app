@@ -1,26 +1,23 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
 import "./App.css";
+import StockAnalysis from "./StockAnalysis";
+import { SharePriceStats as SharePriceStatsModel } from "../server/stock-analysis/stock-analysis.models";
+import SharePriceStats from "./SharePriceStats";
+import ProfitCheck from "./ProfitCheck";
 
-function App() {
+export default function App() {
+  const [stats, setStats] = useState<SharePriceStatsModel | null>(null);
+
+  function handleStats(stats: SharePriceStatsModel | null) {
+    setStats(stats);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <h1>Stock analysis</h1>
+      <StockAnalysis onStats={handleStats} />
+      {stats && <SharePriceStats stats={stats} />}
+      {stats && <ProfitCheck stats={stats} />}
+    </main>
   );
 }
-
-export default App;

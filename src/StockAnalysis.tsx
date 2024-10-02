@@ -4,6 +4,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { SharePriceStats } from "../server/stock-analysis/stock-analysis.models";
+import ErrorMessage from "./ErrorMessage";
+import { useAuth } from "./hooks/auth";
 
 type StockAnalysisProps = {
   onStats(stats: SharePriceStats | null): void;
@@ -18,6 +20,7 @@ export default function StockAnalysis({ onStats }: StockAnalysisProps) {
   const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(null);
   const [statsLoading, setStatsLoading] = useState(false);
   const [statsErr, setStatsError] = useState("");
+  const { token } = useAuth();
 
   async function handleAnalyzeClick() {
     setStatsLoading(true);
@@ -27,7 +30,10 @@ export default function StockAnalysis({ onStats }: StockAnalysisProps) {
     const end = endTime!.toDate().getTime();
     try {
       const response = await fetch(
-        `/api/stock-analysis?startTime=${start}&endTime=${end}`
+        `/api/stock-analysis?startTime=${start}&endTime=${end}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       setStatsLoading(false);
@@ -104,12 +110,7 @@ export default function StockAnalysis({ onStats }: StockAnalysisProps) {
             Analyze
           </button>
         </div>
-        {err && (
-          <div className="error">
-            <i className="icon exclamation"></i>
-            {err}
-          </div>
-        )}
+        {err && <ErrorMessage error={err} />}
       </div>
     </LocalizationProvider>
   );

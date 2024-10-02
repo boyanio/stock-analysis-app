@@ -1,0 +1,15 @@
+i.icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+i.icon.exclamation::after {
+  content: "\26A0";
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 0.5em;
+  margin-top: 4px;
+}

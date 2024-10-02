@@ -7,16 +7,6 @@ main {
   font-size: calc(10px + 2vmin);
 }
 
-i.icon {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-}
-
-i.icon.exclamation::after {
-  content: "\26A0";
-}
-
 h1 {
   margin: 0;
 }
@@ -60,12 +50,6 @@ button:disabled {
   background-color: #f8f9f9;
   padding: 14px;
   border-radius: 4px;
-}
-
-.error {
-  color: #e74c3c;
-  font-size: 0.5em;
-  margin-top: 4px;
 }
 
 input {

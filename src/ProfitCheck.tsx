@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./ProfitCheck.css";
 import { SharePriceStats } from "../server/stock-analysis/stock-analysis.models";
+import ErrorMessage from "./ErrorMessage";
 
 type ProfitCheckProps = {
   stats: SharePriceStats;
@@ -50,12 +51,7 @@ export default function ProfitCheck({ stats }: ProfitCheckProps) {
             Check
           </button>
         </div>
-        {error && (
-          <div className="error">
-            <i className="icon exclamation"></i>
-            {error}
-          </div>
-        )}
+        {error && <ErrorMessage error={error} />}
         {profit > 0 && (
           <div className="profit">
             You could have earnt 💰

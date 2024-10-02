@@ -21,6 +21,10 @@ npm run build
 npm run start:server:production
 ```
 
+## Data
+
+Share price history data is hard-coded in `server/stock-analysis/stock-price-history.json`. It covers the time range `13:00:00 - 13:00:10`. I have explicitly ignored the date selection in the UI, but it could be an improvement in the future.
+
 ## Notes
 
 Here are some notes regarding the implementation of the app:
@@ -30,3 +34,4 @@ Here are some notes regarding the implementation of the app:
 - I have not used any fancy CSS library, but rather I have kept it simple when it comes to styles.
 - I have covered with tests only the "main functionalities", in my opinion, the API that does the analysis and the frontend component that determines the maximum profit.
 - On same places in the code I have left notes how the code could be changed to make the app "more production-ready"
+- I have configured a simple GitHub action for CI

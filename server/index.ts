@@ -28,4 +28,4 @@ app.use(
   stockAnalysisRouter(stockAnalysisRepository)
 );
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

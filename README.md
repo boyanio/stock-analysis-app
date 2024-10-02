@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# Stock Analysis App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The app has two parts: a frontend part written in React.js and a backend part written in express.js.
 
-## Available Scripts
+## Dev
 
-In the project directory, you can run:
+You can run both the server and the client in watch mode:
 
-### `npm start`
+```bash
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In development, the frontend runs in a dev server and proxies API requests to the express.js server.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Production
 
-### `npm test`
+You can create a production build of the frontend and then run the server to serve the generated static assets.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm run build
+npm run start:server:production
+```
 
-### `npm run build`
+## Notes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Here are some notes regarding the implementation of the app:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Even if not explicitly stated in the requirements, it felt weird to me to start the app directly on the screen for analysis. That's why I implemented a simple authentication mechanism based on JWT tokens. There is an API that creates JWT tokens (statically) and those are used by the other APIs.
+- I have implemented basic logging on the server that could be integrated with something like ElasticSearch.
+- I have not used any fancy CSS library, but rather I have kept it simple when it comes to styles.
+- I have covered with tests only the "main functionalities", in my opinion, the API that does the analysis and the frontend component that determines the maximum profit.
+- On same places in the code I have left notes how the code could be changed to make the app "more production-ready"

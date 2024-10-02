@@ -17,6 +17,6 @@ it("calculates profit", async () => {
   const button = screen.getByRole("button", { name: "Check" });
   fireEvent.click(button);
 
-  expect(screen.getByText("You could have earnt 💰")).toBeInTheDocument();
+  expect(screen.getByText("You could have earned 💰")).toBeInTheDocument();
   expect(screen.getByText("289.08")).toBeInTheDocument();
 });

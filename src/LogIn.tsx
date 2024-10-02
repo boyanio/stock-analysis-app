@@ -11,7 +11,7 @@ export default function LogIn() {
       method: "POST",
     });
     if (!response.ok) {
-      setError("Cannot authentucate. Please, try again shortly.");
+      setError("Cannot authenticate. Please, try again shortly.");
       return;
     }
 

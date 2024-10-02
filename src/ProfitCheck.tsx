@@ -41,7 +41,7 @@ export default function ProfitCheck({ stats }: ProfitCheckProps) {
 
   return (
     <>
-      <h2>Check how much you could have earnt by investing</h2>
+      <h2>Check how much you could have earned by investing</h2>
 
       <div className="form-outer">
         <div className="form-inner">
@@ -54,7 +54,7 @@ export default function ProfitCheck({ stats }: ProfitCheckProps) {
         {error && <ErrorMessage error={error} />}
         {profit > 0 && (
           <div className="profit">
-            You could have earnt 💰
+            You could have earned 💰
             <span className="format">{profit.toFixed(2)}</span>
           </div>
         )}

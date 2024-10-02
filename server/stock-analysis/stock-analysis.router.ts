@@ -8,7 +8,7 @@ import {
 import { SharePrice, SharePriceStats } from "./stock-analysis.models";
 
 export function stockAnalysisRouter(
-  reposiroy: IStockAnalysisRepository
+  repository: IStockAnalysisRepository
 ): Router {
   const router = express.Router();
 
@@ -30,7 +30,7 @@ export function stockAnalysisRouter(
         .send({ error: "Invalid end time." });
     }
 
-    const records = reposiroy.getRecords({ startTime, endTime });
+    const records = repository.getRecords({ startTime, endTime });
     if (!records.length) {
       return res
         .status(STATUS_BAD_REQUEST)

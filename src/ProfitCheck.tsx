@@ -46,7 +46,7 @@ export default function ProfitCheck({ stats }: ProfitCheckProps) {
       <div className="form-outer">
         <div className="form-inner">
           💰
-          <input type="number" min={0} ref={inputRef} />
+          <input type="number" min={0} ref={inputRef} aria-label="Money" />
           <button type="button" onClick={handleCheckClick}>
             Check
           </button>

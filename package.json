@@ -9,7 +9,8 @@
     "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
     "build": "react-scripts build",
     "test:client": "react-scripts test",
-    "test:server": "jest server"
+    "test:server": "jest server",
+    "test": "npm run test:client -- --watchAll=false && npm run test:server"
   },
   "dependencies": {
     "express": "^4.21.0",

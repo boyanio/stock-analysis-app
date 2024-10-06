@@ -14,11 +14,10 @@ In development, the frontend runs in a dev server and proxies API requests to th
 
 ## Production
 
-You can create a production build of the frontend and then run the server to serve the generated static assets.
+You can use Docker compose to build and run the app locally in a production mode.
 
 ```bash
-npm run build
-npm run start:server:production
+docker-compose up --build app
 ```
 
 ## Data

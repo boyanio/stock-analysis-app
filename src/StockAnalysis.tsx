@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { SharePriceStats } from "../server/stock-analysis/stock-analysis.models";
 import ErrorMessage from "./ErrorMessage";
 import { useAuth } from "./hooks/auth";
+import { MobileDateTimePicker } from "@mui/x-date-pickers/MobileDateTimePicker";
 
 type StockAnalysisProps = {
   onStats(stats: SharePriceStats | null): void;
 };
 
-const referenceData = dayjs("2024-09-30");
+const MIN_DATE = dayjs("2024-05-01T00:00:00");
+const MAX_DATE = dayjs("2024-10-31T23:59:59");
+const DATE_PICKER_FORMAT = "DD-MMM-YYYY HH:mm:ss";
 const STATS_GENERIC_ERROR =
   "We cannot analyze the stock prices at the moment. Please, try again shortly.";
 
@@ -80,34 +82,37 @@ export default function StockAnalysis({ onStats }: StockAnalysisProps) {
 
       <div className="form-outer">
         <div className="form-inner">
-          <MobileTimePicker
+          <MobileDateTimePicker
             label={"Start time"}
-            views={["hours", "minutes", "seconds"]}
-            format="HH:mm:ss"
+            views={["year", "month", "day", "hours", "minutes", "seconds"]}
+            format={DATE_PICKER_FORMAT}
             ampm={false}
             disabled={statsLoading}
-            referenceDate={referenceData}
             onAccept={handleStartTimeChange}
             defaultValue={startTime}
+            minDate={MIN_DATE}
+            maxDate={MAX_DATE}
           />
 
-          <MobileTimePicker
+          <MobileDateTimePicker
             label={"End time"}
-            views={["hours", "minutes", "seconds"]}
-            format="HH:mm:ss"
+            views={["year", "month", "day", "hours", "minutes", "seconds"]}
+            format={DATE_PICKER_FORMAT}
             ampm={false}
             disabled={statsLoading}
-            referenceDate={referenceData}
             onAccept={handleEndTimeChange}
             defaultValue={endTime}
+            minDate={MIN_DATE}
+            maxDate={MAX_DATE}
           />
 
           <button
             type="button"
+            className={"action" + (statsLoading ? " loading" : "")}
             disabled={!canAnalyze}
             onClick={handleAnalyzeClick}
           >
-            Analyze
+            <span>Analyze</span>
           </button>
         </div>
         {err && <ErrorMessage error={err} />}

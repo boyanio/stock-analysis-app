@@ -1,11 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { stockAnalysisRouter } from "./stock-analysis/stock-analysis.router";
-import { InMemoryStockAnalysisRepository } from "./stock-analysis/in-memory-stock-analysis.repository";
-import stockPriceHistory from "./stock-analysis/stock-price-history.json";
 import { authRouter } from "./auth/auth.router";
 import { requireJwtToken } from "./middleware/auth";
 import morgan from "morgan";
+import { RollingFileStockAnalysisRepository } from "./stock-analysis/rolling-file-stock-analysis.repository";
 
 const PORT = 8080;
 
@@ -18,14 +17,16 @@ app.use(morgan("combined"));
 // NOTE: Use a more reputable auth provider (e.g., Auth0)
 app.use("/api/auth", authRouter);
 
-// NOTE: Switch to real database repository, if necessary
-const stockAnalysisRepository = new InMemoryStockAnalysisRepository(
-  stockPriceHistory
-);
+// NOTE: Switch to a real database repository
+const stockAnalysisRepository = new RollingFileStockAnalysisRepository({
+  minTimestamp: new Date("2024-05-01T00:00:00").getTime(),
+  maxTimestamp: new Date("2024-10-31T23:59:59").getTime(),
+});
+const batchSizeInSecs = 60 * 60; // 1 hour
 app.use(
   "/api/stock-analysis",
   requireJwtToken,
-  stockAnalysisRouter(stockAnalysisRepository)
+  stockAnalysisRouter(stockAnalysisRepository, { batchSizeInSecs })
 );
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

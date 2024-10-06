@@ -12,3 +12,7 @@ export type TimeRange = {
   startTime: number;
   endTime: number;
 };
+
+export class NoSharePriceHistoryRecordsError extends Error {}
+
+export class CannotPerformStockAnalysisError extends Error {}

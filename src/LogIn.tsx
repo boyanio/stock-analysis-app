@@ -24,7 +24,7 @@ export default function LogIn() {
     <>
       <h2>Analyze the best time to buy & sell</h2>
 
-      <button type="button" onClick={handleLogInClick}>
+      <button type="button" className="action" onClick={handleLogInClick}>
         Log In
       </button>
 

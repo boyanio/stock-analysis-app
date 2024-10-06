@@ -2,12 +2,13 @@ import React, { useRef, useState } from "react";
 import "./ProfitCheck.css";
 import { SharePriceStats } from "../server/stock-analysis/stock-analysis.models";
 import ErrorMessage from "./ErrorMessage";
+import Money from "./Money";
 
-type ProfitCheckProps = {
+type Props = {
   stats: SharePriceStats;
 };
 
-export default function ProfitCheck({ stats }: ProfitCheckProps) {
+export default function ProfitCheck({ stats }: Props) {
   const [profit, setProfit] = useState(0);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,15 +48,14 @@ export default function ProfitCheck({ stats }: ProfitCheckProps) {
         <div className="form-inner">
           💰
           <input type="number" min={0} ref={inputRef} aria-label="Money" />
-          <button type="button" onClick={handleCheckClick}>
+          <button type="button" className="action" onClick={handleCheckClick}>
             Check
           </button>
         </div>
         {error && <ErrorMessage error={error} />}
         {profit > 0 && (
           <div className="profit">
-            You could have earned 💰
-            <span className="format">{profit.toFixed(2)}</span>
+            You could have earned <Money value={profit} />
           </div>
         )}
       </div>

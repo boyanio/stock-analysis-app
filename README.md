@@ -23,7 +23,11 @@ npm run start:server:production
 
 ## Data
 
-Share price history data is hard-coded in `server/stock-analysis/stock-price-history.json`. It covers the time range `13:00:00 - 13:00:10`. I have explicitly ignored the date selection in the UI, but it could be an improvement in the future.
+The share price history data is generated based on a rolling file `server/stock-analysis/one-day-stock-price-history.txt`. The file contains data for a single day (86400 records). When you request records for several days, it gets the prices for the first starting from the appropriate index (`00:00:00` corresponds to index `0` in the file), then repeats all the data for the next days, and finally gets the prices for the last day ending at the appropriate index again.
+
+The hardcoded period is `1 May 2024 - 31 October 2024`.
+
+A more appropriate solution would be to use a time series database, for example, [MongoDB Time Series](https://www.mongodb.com/docs/manual/core/timeseries-collections/).
 
 ## Notes
 

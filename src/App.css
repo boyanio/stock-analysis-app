@@ -17,7 +17,7 @@ h2 {
   font-weight: normal;
 }
 
-button {
+button.action {
   font-size: 1rem;
   font-weight: 700;
   padding: 0 16px;
@@ -27,18 +27,59 @@ button {
   cursor: pointer;
   color: #ffffff;
   min-height: 50px;
+  position: relative;
 }
 
-button:active {
+button.action:active {
   background: #007a63;
 }
 
-button:hover {
+button.action:hover {
   background: #7dcea0;
 }
 
-button:disabled {
+button.action:disabled {
   background: #d5d8dc;
+  cursor: not-allowed;
+}
+
+button.action.loading:disabled {
+  cursor: wait;
+}
+
+button.action > span {
+  transition: all 0.2s;
+}
+
+button.action.loading > span {
+  visibility: hidden;
+  opacity: 0;
+}
+
+button.action.loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .form-inner {

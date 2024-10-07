@@ -26,6 +26,7 @@ export default function StockAnalysis({ onStats }: StockAnalysisProps) {
 
   async function handleAnalyzeClick() {
     setStatsLoading(true);
+    setStatsError("");
     onStats(null);
 
     const start = startTime!.toDate().getTime();

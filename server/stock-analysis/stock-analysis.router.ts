@@ -102,25 +102,24 @@ function findBestBuySellIndexesInBatches(
       startTime: batchStartTime,
       endTime: batchEndTime,
     });
-    if (!batchRecords.length) {
-      continue;
-    }
 
-    hasRecords = true;
+    if (batchRecords.length > 0) {
+      hasRecords = true;
 
-    for (let i = 0; i < batchRecords.length; i++) {
-      const sharePrice = batchRecords[i];
-      const profit = sharePrice.price - minPrice;
+      for (let i = 0; i < batchRecords.length; i++) {
+        const sharePrice = batchRecords[i];
+        const profit = sharePrice.price - minPrice;
 
-      if (profit >= maxProfit) {
-        maxProfit = profit;
-        bestBuy = { timestamp: minPriceTimestamp, price: minPrice };
-        bestSell = sharePrice;
-      }
+        if (profit >= maxProfit) {
+          maxProfit = profit;
+          bestBuy = { timestamp: minPriceTimestamp, price: minPrice };
+          bestSell = sharePrice;
+        }
 
-      if (profit < 0) {
-        minPrice = sharePrice.price;
-        minPriceTimestamp = sharePrice.timestamp;
+        if (profit < 0) {
+          minPrice = sharePrice.price;
+          minPriceTimestamp = sharePrice.timestamp;
+        }
       }
     }
 

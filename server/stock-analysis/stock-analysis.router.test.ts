@@ -45,6 +45,38 @@ describe("Stock Analysis API", () => {
     }
   );
 
+  it("should perform stock analysis when time range start is before the min timestamp", async () => {
+    const records: SharePrice[] = [
+      { timestamp: 5000, price: 10 },
+      { timestamp: 6000, price: 11 },
+    ];
+    const app = createApp(records, { batchSizeInSecs: 2 });
+    const res = await request(app)
+      .get("/api/stock-analysis?startTime=0&endTime=6000")
+      .send();
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({
+      buy: { timestamp: 5000, price: 10 },
+      sell: { timestamp: 6000, price: 11 },
+    });
+  });
+
+  it("should perform stock analysis when time range end is after the max timestamp", async () => {
+    const records: SharePrice[] = [
+      { timestamp: 5000, price: 10 },
+      { timestamp: 6000, price: 11 },
+    ];
+    const app = createApp(records, { batchSizeInSecs: 2 });
+    const res = await request(app)
+      .get("/api/stock-analysis?startTime=5000&endTime=10000")
+      .send();
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({
+      buy: { timestamp: 5000, price: 10 },
+      sell: { timestamp: 6000, price: 11 },
+    });
+  });
+
   it.each([[[10, 10, 10]], [[10, 9, 9]], [[10, 9, 8]]])(
     "should return conflict when price does not go up",
     async (prices) => {

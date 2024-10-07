@@ -18,15 +18,23 @@ app.use(morgan("combined"));
 app.use("/api/auth", authRouter);
 
 // NOTE: Switch to a real database repository
+const MIN_DATE = new Date("2024-04-30T21:00:00Z");
+const MAX_DATE = new Date("2024-10-31T21:59:59Z");
 const stockAnalysisRepository = new RollingFileStockAnalysisRepository({
-  minTimestamp: new Date("2024-05-01T00:00:00").getTime(),
-  maxTimestamp: new Date("2024-10-31T23:59:59").getTime(),
+  minTimestamp: MIN_DATE.getTime(),
+  maxTimestamp: MAX_DATE.getTime(),
 });
-const batchSizeInSecs = 60 * 60; // 1 hour
+const ONE_HOUR_IN_SECS = 60 * 60;
 app.use(
   "/api/stock-analysis",
   requireJwtToken,
-  stockAnalysisRouter(stockAnalysisRepository, { batchSizeInSecs })
+  stockAnalysisRouter(stockAnalysisRepository, {
+    batchSizeInSecs: ONE_HOUR_IN_SECS,
+  })
 );
 
-app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(
+    `Listening on http://localhost:${PORT}\n\nSupported time range for queries:\n[\n\t${MIN_DATE}\n\t${MAX_DATE}\n]`
+  )
+);

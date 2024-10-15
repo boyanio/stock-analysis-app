@@ -11,7 +11,7 @@ describe(RollingFileStockAnalysisRepository.name, () => {
       minTimestamp: now,
       maxTimestamp: now + 1,
     });
-    const records = repository.getRecords({
+    const records = await repository.getRecords({
       startTime: now - 2,
       endTime: now - 1,
     });
@@ -25,7 +25,7 @@ describe(RollingFileStockAnalysisRepository.name, () => {
       minTimestamp: now,
       maxTimestamp: now + 1,
     });
-    const records = repository.getRecords({
+    const records = await repository.getRecords({
       startTime: now + 2,
       endTime: now + 3,
     });
@@ -41,7 +41,7 @@ describe(RollingFileStockAnalysisRepository.name, () => {
       minTimestamp: startOfDay,
       maxTimestamp: endOfDay,
     });
-    const records = repository.getRecords({
+    const records = await repository.getRecords({
       startTime: startOfDay,
       endTime: endOfDay,
     });
@@ -60,7 +60,7 @@ describe(RollingFileStockAnalysisRepository.name, () => {
     });
     const startTime = startOfYesterday + 10 * ONE_SECOND_IN_MILLIS;
     const endTime = endOfToday - 10 * ONE_SECOND_IN_MILLIS;
-    const records = repository.getRecords({
+    const records = await repository.getRecords({
       startTime,
       endTime,
     });

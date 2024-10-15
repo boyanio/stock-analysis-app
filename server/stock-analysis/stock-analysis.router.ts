@@ -25,7 +25,7 @@ export function stockAnalysisRouter(
 
   const router = express.Router();
 
-  router.get("/", (req, res) => {
+  router.get("/", async (req, res) => {
     const startTimeParam = req.query.startTime as string;
     const endTimeParam = req.query.endTime as string;
 
@@ -45,7 +45,7 @@ export function stockAnalysisRouter(
 
     const { batchSizeInSecs } = options;
     try {
-      const stats = findBestBuySellIndexesInBatches(
+      const stats = await findBestBuySellIndexesInBatches(
         repository,
         {
           startTime,
@@ -72,11 +72,11 @@ export function stockAnalysisRouter(
   return router;
 }
 
-function findBestBuySellIndexesInBatches(
+async function findBestBuySellIndexesInBatches(
   repository: IStockAnalysisRepository,
   timeRange: TimeRange,
   batchSizeInSecs: number
-): SharePriceStats {
+): Promise<SharePriceStats> {
   const { startTime, endTime } = timeRange;
   const getBatchEndTime = (batchStartTime: number) =>
     Math.min(
@@ -98,7 +98,7 @@ function findBestBuySellIndexesInBatches(
   let batchEndTime = getBatchEndTime(batchStartTime);
 
   for (let b = 0; b < batchesCount; b++) {
-    const batchRecords = repository.getRecords({
+    const batchRecords = await repository.getRecords({
       startTime: batchStartTime,
       endTime: batchEndTime,
     });

@@ -2,6 +2,9 @@ import { SharePrice, TimeRange } from "./stock-analysis.models";
 import { IStockAnalysisRepository } from "./stock-analysis.repository";
 import fs from "fs";
 import path from "path";
+import util from "util";
+
+const readFile = util.promisify(fs.readFile);
 
 const filePath = path.resolve(__dirname, "one-day-stock-price-history.txt");
 const ONE_SECOND_IN_MILLIS = 1000;
@@ -21,15 +24,15 @@ export class RollingFileStockAnalysisRepository
     this.maxTimestamp = roundDownToSecond(limits.maxTimestamp);
   }
 
-  getRecords(timeRange: TimeRange): SharePrice[] {
+  async getRecords(timeRange: TimeRange): Promise<SharePrice[]> {
     if (
       timeRange.endTime < this.minTimestamp ||
       timeRange.startTime > this.maxTimestamp
     ) {
-      return [];
+      return Promise.resolve([]);
     }
 
-    const contents = fs.readFileSync(filePath, "utf-8");
+    const contents = await readFile(filePath, "utf-8");
     const lines = contents.split(/\n/g);
 
     const startTime = Math.max(

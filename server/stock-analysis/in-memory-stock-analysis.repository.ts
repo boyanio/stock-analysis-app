@@ -6,10 +6,11 @@ export class InMemoryStockAnalysisRepository
 {
   constructor(private records: SharePrice[]) {}
 
-  getRecords(timeRange: TimeRange): SharePrice[] {
+  getRecords(timeRange: TimeRange): Promise<SharePrice[]> {
     const { startTime, endTime } = timeRange;
-    return this.records.filter(
+    const filteredRecords = this.records.filter(
       (item) => item.timestamp >= startTime && item.timestamp <= endTime
     );
+    return Promise.resolve(filteredRecords);
   }
 }
